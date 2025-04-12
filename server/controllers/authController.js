@@ -11,16 +11,15 @@ const generateToken = (id) => {
 // Registruoti nauja vartotoja
 exports.register = async (req, res) => {
   try {
-    const [username, email, password] = req.body;
-
     // Tikrinam ar varototjas jau egzistuoja
-    const existingUserByEmail = await User.findOne({ email });
-    const existingUserByUsername = await User.findOne({ username });
+    const { username, email, password } = req.body;
 
-    if (existingUserByEmail || existingUserByUsername) {
+    // Tikriname ar vartotojas jau egzistuoja
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    if (existingUser) {
       return res.status(400).json({
         message:
-          "Vartotojas su tokiu el. pastu arba prisijungimo vardu jau egzistuoja",
+          "Vartotojas su tokiu el. paštu arba prisijungimo vardu jau egzistuoja",
       });
     }
 

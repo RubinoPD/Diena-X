@@ -93,13 +93,10 @@ exports.updateItem = async (req, res) => {
         .json({ message: "Neturite prieigos prie sio daikto" });
     }
 
-    item.name = name || item.name;
-    item.description = description || item.description;
-    item.expiryDate = expiryDate || item.expiryDate;
-    if (image) item.image = image;
-
-    // Atstatome priminimu statusa, jei data buvo pakeista
-    if (expiryDate) {
+    if (name !== undefined) item.name = name;
+    if (description !== undefined) item.description = description;
+    if (expiryDate !== undefined) {
+      item.expiryDate = expiryDate;
       item.reminderSent = {
         month: false,
         week: false,
@@ -107,6 +104,23 @@ exports.updateItem = async (req, res) => {
         expired: false,
       };
     }
+
+    if (image !== undefined) item.image = image;
+
+    // item.name = name || item.name;
+    // item.description = description || item.description;
+    // item.expiryDate = expiryDate || item.expiryDate;
+    // if (image) item.image = image;
+
+    // // Atstatome priminimu statusa, jei data buvo pakeista
+    // if (expiryDate) {
+    //   item.reminderSent = {
+    //     month: false,
+    //     week: false,
+    //     day: false,
+    //     expired: false,
+    //   };
+    // }
 
     await item.save();
     res.json(item);

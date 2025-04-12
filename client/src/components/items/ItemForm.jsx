@@ -55,6 +55,8 @@ const ItemForm = ({
       image,
     };
 
+    console.log("Siunciami duomenys:", itemData);
+
     try {
       if (item) {
         // Atnaujinamas esamas daiktas

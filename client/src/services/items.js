@@ -29,7 +29,7 @@ export const createItem = async (backpackId, itemData) => {
 
 export const updateItem = async (id, itemData) => {
   try {
-    const response = await api.put(`/items/${id}`);
+    const response = await api.put(`/items/${id}`, itemData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: "Ivyko klaida" };
