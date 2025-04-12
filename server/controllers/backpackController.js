@@ -12,7 +12,7 @@ exports.getBackpacks = async (req, res) => {
 };
 
 // Gauti kuprine pagal ID
-exports.Backpack = async (req, res) => {
+exports.getBackpack = async (req, res) => {
   try {
     const backpack = await Backpack.findOne({
       _id: req.params.id,
