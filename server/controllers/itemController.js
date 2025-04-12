@@ -145,7 +145,7 @@ exports.deleteItem = async (req, res) => {
         .json({ message: "Neturite prieigos prie sio daikto" });
     }
 
-    await item.remove();
+    await item.deleteOne();
     res.json({ message: "Daiktas sekmingai istrintas" });
   } catch (error) {
     res.status(500).json({ message: "Serverio klaida", error: error.message });
