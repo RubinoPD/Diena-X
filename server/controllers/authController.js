@@ -14,11 +14,13 @@ exports.register = async (req, res) => {
     const [username, email, password] = req.body;
 
     // Tikrinam ar varototjas jau egzistuoja
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
+    const existingUserByEmail = await User.findOne({ email });
+    const existingUserByUsername = await User.findOne({ username });
+
+    if (existingUserByEmail || existingUserByUsername) {
       return res.status(400).json({
         message:
-          "Vartotojas su tokiu el. paštu arba prisijungimo vardu jau egzistuoja",
+          "Vartotojas su tokiu el. pastu arba prisijungimo vardu jau egzistuoja",
       });
     }
 
@@ -41,6 +43,7 @@ exports.register = async (req, res) => {
       token,
     });
   } catch (error) {
+    console.error("KLAIDA REGISTRUOJANT VARTOTOJĄ:", error);
     res.status(500).json({ message: "Serverio klaida", error: error.message });
   }
 };
